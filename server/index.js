@@ -1,11 +1,8 @@
 var express = require('express');
 var app = express();
 
-app.get('/init', function (req, res) {
-  res.send(req.query);
+app.get('/', function (req, res) {
+  res.send({name:'lin'});
 });
 
-var server = app.listen(3000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-});
+app.listen(3000);
