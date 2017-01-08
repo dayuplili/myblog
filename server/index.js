@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 
+var userCtr = require('../controller/userCtr');
+
 app.all('*',function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -10,8 +12,14 @@ app.all('*',function(req, res, next){
     next();
 });
 
-app.get('/', function (req, res) {
-   res.send({data:'success'});
+app.get('/login', function (request, response) {
+    var username = request.query.userName;
+    var password = request.query.passWord;
+    userCtr.userFind(username,password,function(res){
+        if(res && res.flag){
+           response.send({data:'success'});
+        }
+    });
 });
 
 app.listen(3000);
