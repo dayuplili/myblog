@@ -6,12 +6,12 @@ $('.doLogin').on('click',function(){
         passWord:password
     };
     $.ajax({
-        url:'http://127.0.0.1:3000/login',
+        url:'http://172.30.150.43:3000/login',
         type:'get',
         data:param,
         success:function(data){
             if(data.data && (data.data == 'success')){
-                window.location.href = 'file:///D:/myblog/myblog/src/list/list.html'
+                window.location.href = '/src/list/list.html';
             }
         }
     })

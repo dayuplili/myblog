@@ -22,7 +22,7 @@ userCtr.userFind = function(name,password,callback){
         if(err){
             console.log("Error:" + err);
         }else{
-            if(res){
+            if(res.length != 0){
                 callback({flag:true});
             }
         }
