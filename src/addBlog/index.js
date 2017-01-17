@@ -1,8 +1,10 @@
 (function(){
     $('.addBlog').on('click',function(){
+        var title = $('#blog-title').val();
+        var content = $('#blog-content').val();
         var param = {
-            title:'123',
-            content:'321'
+            title:title,
+            content:content
         }
         $.ajax({
             type:'post',
