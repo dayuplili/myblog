@@ -11,7 +11,10 @@
              url:'http://127.0.0.1:3000/addBlog',
              data:param,
              success:function(data){
-                 alert(data);
+                 if(data && data.result){
+                     alert('保存成功');
+                     window.location.reload();
+                 }
              }
         })
     });

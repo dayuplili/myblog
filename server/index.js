@@ -38,7 +38,7 @@ app.get('/getLists',function(request,response){
 app.post('/addBlog',function(request,response){
     var param = request.body;
     blogCtr.blogInsert(param,function(data){
-        console.log(data.data);
+        response.send(data);
     })
 });
 

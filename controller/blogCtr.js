@@ -14,7 +14,7 @@ blogCtr.blogInsert = function(param,callback){
         }
         else {
             console.log("Res:" + res);
-            callback({data:'success'});
+            callback({result:true});
         }
     });
 };
