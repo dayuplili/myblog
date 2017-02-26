@@ -1,21 +1,27 @@
-(function(){
-    $('.addBlog').on('click',function(){
-        var title = $('#blog-title').val();
-        var content = $('#blog-content').val();
-        var param = {
-            title:title,
-            content:content
+var vm = new Vue({
+    el:'#app',
+    data:{
+        title:null,
+        content:null,
+        data:{}
+    },
+    http: {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    },
+    methods:{
+        addBlog:function(){
+            var url = 'http://127.0.1:3000/blog/addBlog';
+            this.data.title = this.title;
+            this.data.content = this.content;
+            this.$http.post(url,this.data,{emulateJSON:true}).then(function(data){
+                var tag = data.body.result;
+                if(tag){
+                    alert('保存成功');
+                    window.location.reload();
+                }
+            },function(res){
+                console.log(res);
+            })
         }
-        $.ajax({
-            type:'post',
-             url:'http://127.0.0.1:3000/addBlog',
-             data:param,
-             success:function(data){
-                 if(data && data.result){
-                     alert('保存成功');
-                     window.location.reload();
-                 }
-             }
-        })
-    });
-})(jQuery)
+    }
+})

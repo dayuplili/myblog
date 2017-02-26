@@ -1,19 +1,23 @@
-
-$.ajax({
-    type:'get',
-    url:'http://127.0.0.1:3000/getLists',
-    success:function(data){
-        data.lists && renderHtml(data.lists);
-        console.log(123);
+var vm = new Vue({
+    el:'#app',
+    data:{
+        url:'http://127.0.0.1:3000/blog/getLists',
+        lists:null
+    },
+    created:function(){
+        this.$http.get(this.url).then(function(data){
+            if(data.body.lists){
+                this.lists = data.body.lists;
+                console.log(this.lists);
+            }
+        },function(res){
+            console.log(res);
+        })
+    },
+    methods:{
+        itemHref:function(e){
+            var _id = e;
+            alert(_id);
+        }
     }
-});
-
-function renderHtml(data){
-    var str = '';
-    data.map(function(item,index){
-        str +=  '<div class="list-group-item">'+
-                '<p>'+item.title+'</p>'+
-                '</div>';
-    });
-    $('.list-group').append(str);
-}
+})

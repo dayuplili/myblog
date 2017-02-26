@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../vue.js"></script> 
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.2.0/vue-resource.min.js"></script>   
     <link rel="stylesheet" href="list.css">
 </head>
 <body>
-    <div class="ui-container">
-        <div class="list-group">
-
+    <div class="ui-container" id="app">
+        <div class="ui-head">
+            <h1>Leon Bolg</h1>
         </div>
-        <a class="option-btn" href='http://192.168.1.101:8888/src/addBlog/index.html'>
-          <img src="http://192.168.1.101:8888/src/img/add.png">
+        <div class="list-group">
+            <div class="list-group-item" v-bind='{id:item._id}'  v-for='item in lists' @click='itemHref(item._id)'>
+                <p>{{ item.title }}</p>
+            </div>
+        </div>
+        <a class="option-btn" href='http://192.168.1.106:8888/src/addBlog/index.html'>
+          <img src="http://192.168.1.106:8888/src/img/add.png">
         </a>
     </div>
     <script src="list.js"></script>

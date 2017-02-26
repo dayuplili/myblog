@@ -1,18 +1,17 @@
-$('.doLogin').on('click',function(){
-    var username = $('#username').val();
-    var password = $('#inputPassword').val();
-    var param = {
-        userName:username,
-        passWord:password
-    };
-    $.ajax({
-        url:'http://172.30.150.43:3000/login',
-        type:'get',
-        data:param,
-        success:function(data){
-            if(data.data && (data.data == 'success')){
-                window.location.href = '/src/list/list.html';
-            }
+var vm = new Vue({
+    el:'#app',
+    data:{
+        username:null,
+        password:null
+    },
+    methods:{
+        doLogin:function(){
+            var url = 'http://127.0.0.1:3000/user/login?username='+this.username+'&password='+this.password;
+            this.$http.get(url).then(function(data){
+                console.log(data.body.data);
+            },function(res){
+                console.log(res);
+            });
         }
-    })
+    }
 })

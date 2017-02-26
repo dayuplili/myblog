@@ -1,13 +1,11 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
 
-var userCtr = require('../controller/userCtr');
-var blogCtr = require('../controller/blogCtr');
+var userRouter = require('./router/userRouter');
+var blogRouter = require('./router/blogRouter');
 
 app.all('*',function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
@@ -17,29 +15,7 @@ app.all('*',function(req, res, next){
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
-
-app.get('/login', function (request, response) {
-    var username = request.query.userName;
-    var password = request.query.passWord;
-    userCtr.userFind(username,password,function(res){
-        if(res && res.flag){
-            response.send({data:'success'});
-        }
-    });
-});
-
-app.get('/getLists',function(request,response){
-    blogCtr.blogLists(function(data){
-        console.log(data);
-        response.send({lists:data});
-    });
-});
-
-app.post('/addBlog',function(request,response){
-    var param = request.body;
-    blogCtr.blogInsert(param,function(data){
-        response.send(data);
-    })
-});
+app.use('/user',userRouter);
+app.use('/blog',blogRouter);
 
 app.listen(3000);
