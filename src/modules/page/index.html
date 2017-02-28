@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../../../vue.js"></script> 
+    <style>
+        .prevBtn,.nextBtn{
+            float: left;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid lawngreen;
+
+        }
+
+        .pageList{
+            float: left;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-right: 19px;
+            margin-top: 10px;
+        }
+        .pageList span{
+            padding: 10px;
+            border: 1px solid lawngreen;
+            cursor: pointer;
+        }
+        .active{
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <div style="clear: both" id='app'>
+        <div class="prevBtn" @click='prevClick'>上一页</div>
+        <div class='pageList' v-for='(item, index) in list'>
+            <template v-if='index == currentItem'>
+                <span :class='{active:isActive}' @click='itemClick(index)'>{{ index+1 }}</span>
+            </template>
+            <template v-else>
+                <span @click='itemClick(index)'>{{ index+1 }}</span>
+            </template>
+
+        </div>
+        <div class="nextBtn" @click='nextClick'>下一页</div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                list:['a','b','c','d','e'],
+                isActive:true,
+                currentItem:0
+            },
+            methods:{
+                itemClick:function(index){
+                    this.currentItem = index;
+                },
+                prevClick:function(){
+                    if(this.currentItem != 0){
+                        this.currentItem = this.currentItem - 1;
+                    }
+                },
+                nextClick:function(){
+                    if(this.currentItem < this.list.length-1){
+                        this.currentItem = this.currentItem + 1;
+                    }
+                }
+            }
+        })    
+    </script>
+</body>
+</html>

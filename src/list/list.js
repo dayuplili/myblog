@@ -17,7 +17,7 @@ var vm = new Vue({
     methods:{
         itemHref:function(e){
             var _id = e;
-            alert(_id);
+            window.location.href = '/src/detail/detail.html?id='+_id;
         }
     }
 })

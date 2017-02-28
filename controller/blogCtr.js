@@ -1,7 +1,6 @@
 var Blog = require('../model/blog');
 var blogCtr = {};
-var ObjectId = require('mongodb').ObjectID;
-
+var mongoose = require('mongoose'); 
 blogCtr.blogInsert = function(param,callback){
     var blog = new Blog({
         title:param.title,
@@ -27,7 +26,8 @@ blogCtr.blogLists = function(callback){
 };
 
 blogCtr.getBlogDetail = function(fileKey,callback){
-    Blog.findById(fileKey,function(res){
+    var id = mongoose.Types.ObjectId('587b169e576b4213b8f6f26d'); 
+    Blog.find({_id:id},function(res){
         callback(res);
     });
 };
