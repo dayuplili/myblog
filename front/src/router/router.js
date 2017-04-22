@@ -1,7 +1,8 @@
-import Login from './components/Login'
-import List from './components/List'
-import Detail from './components/Detail'
-import addBlog from './components/AddBlog'
+import Login from '../components/Login'
+import List from '../components/List'
+import Detail from '../components/Detail'
+import userinfo from '../page/userInfo/userinfo'
+import addblog from '../page/addblog/addBlog'
 
 const routers = [
     {
@@ -10,8 +11,9 @@ const routers = [
         component: Login
     },
     {
-        path: '/',
-        component: Login
+        path: '/userinfo',
+        name:'userinfo',
+        component: userinfo
     },
     {
         path: '/List',
@@ -24,9 +26,9 @@ const routers = [
         component:Detail
     },
     {
-      path:'/AddBlog',
+      path:'/addblog',
       name:'addblog',
-      component:addBlog
+      component:addblog
     }
 ]
 

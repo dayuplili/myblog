@@ -8,3 +8,8 @@
     name:'app'
   })
 </script>
+<style>
+body{
+  background:#e9ecf1;
+}
+</style>
