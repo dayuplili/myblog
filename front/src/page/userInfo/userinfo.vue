@@ -22,6 +22,7 @@
           </el-form-item>
         </el-form>
       </div>
+      <slot name="item"></slot>
     </div>
   </div>
 </template>
@@ -48,7 +49,15 @@ export default{
   },
   methods:{
     bindSubmit(){
-      console.log(this.formDate);
+      this.$http.post('http://127.0.0.1:3000/api/userinfos/putInfo',this.formDate,{emulateJSON:true}).
+        then((res) => {
+          let code = res.body.code;
+          if(code === 201){
+            this.$message('保存成功');
+          }
+        } , (resErr) => {
+            this.$message('系统异常');
+        })
     }
   }
 }

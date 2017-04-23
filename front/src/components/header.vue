@@ -24,5 +24,6 @@ export default {
   font-size: 24px;
   line-height: 50px;
   padding-left: 70px;
+  margin: 0 0;
 }
 </style>

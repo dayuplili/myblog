@@ -1,35 +1,15 @@
-import Login from '../components/Login'
-import List from '../components/List'
-import Detail from '../components/Detail'
-import userinfo from '../page/userInfo/userinfo'
-import addblog from '../page/addblog/addBlog'
+import userinfo from '../page/userInfo/userinfo' //个人信息
+import addblog from '../page/addblog/addBlog'    //博客编辑
 
 const routers = [
-    {
-        path: '/Login',
-        name: 'Login',
-        component: Login
-    },
-    {
-        path: '/userinfo',
-        name:'userinfo',
-        component: userinfo
-    },
-    {
-        path: '/List',
-        name: 'List',
-        component: List
-    },
-    {
-        path:'/Detail',
-        name:'Detail',
-        component:Detail
-    },
-    {
-      path:'/addblog',
-      name:'addblog',
-      component:addblog
-    }
+  {
+    path:'/backstage/userinfo',
+    component:userinfo
+  },
+  {
+    path:'/backstage/addblog',
+    component:addblog
+  }
 ]
 
 export default routers;

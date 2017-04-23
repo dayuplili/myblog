@@ -6,6 +6,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var userRouter = require('./router/userRouter');
 var blogRouter = require('./router/blogRouter');
+var userInfo = require('./router/userinfo');
 
 app.all('*',function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
@@ -17,5 +18,6 @@ app.all('*',function(req, res, next){
 });
 app.use('/user',userRouter);
 app.use('/blog',blogRouter);
+app.use('/api/userinfos',userInfo);
 
 app.listen(3000);
