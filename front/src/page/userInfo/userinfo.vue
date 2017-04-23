@@ -2,7 +2,7 @@
   <div class="">
     <tophead></tophead>
     <div class='userinfo clearfix'>
-      <leftmenu :tab-status='activeIndex'></leftmenu>
+      <leftmenu :tab-status='activeIndex' ref="leftmenu"></leftmenu>
       <div class="userinfo-main">
         <el-form :label-position='labelPosition' class="userinfo-form">
           <el-form-item label="姓名：">
@@ -49,6 +49,7 @@ export default{
   methods:{
     bindSubmit(){
       console.log(this.formDate);
+      console.log(this.$refs);
     }
   }
 }
