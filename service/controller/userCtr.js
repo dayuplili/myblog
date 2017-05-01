@@ -1,18 +1,20 @@
-var User = require('../model/user');
-var userCtr = {};
+"use strict";
+let User = require('../model/user');
+let reqCode = require('../config/rescode');
+let userCtr = {};
 
-userCtr.userInsert = function(){
+userCtr.userInsert = function(username,password,callback){
     var user = new User({
-        username:'lin',
-        password:'123456'
+        username: username,
+        password: password
     });
 
     user.save(function(err,res){
         if (err) {
-            console.log("Error:" + err);
+           callback(res);
         }
         else {
-            console.log("Res:" + res);
+            callback(reqCode.CREATED);
         }
     });
 };

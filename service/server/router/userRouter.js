@@ -1,17 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var userCtr = require('../../controller/userCtr');
+var cookie = require('../../config/cookie');
 
-router.post('/login', function (request, response) {
-    var username = request.body.username;
-    var password = request.body.password;
-    userCtr.userFind(username,password,function(res){
-        if(res && res.flag){
-            response.send({data:'success'});
+router.post('/login', function (req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+    userCtr.userFind(username,password,function(data){
+        if(data && data.flag){
+            res.send({data:'success'});
         }else{
-            response.send({data:'false'});
+            res.send({data:'false'});
         }
     });
+});
+
+router.post('/register',function(req,res) {
+    var username = req.body.username;
+    var password = req.body.password;
+    userCtr.userInsert(username,password,function(data){
+        if(data.code === 201){
+            res.send(data);
+        }
+        
+    })
 });
 
 module.exports = router;
