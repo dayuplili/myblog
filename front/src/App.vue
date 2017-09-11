@@ -9,7 +9,13 @@
   })
 </script>
 <style>
-body{
+body,html{
   background:#e9ecf1;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.app{
+  height: 100%;
 }
 </style>
