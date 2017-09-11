@@ -4,9 +4,9 @@
     <div class='ui-right'>
       <div class='login-container'> 
         <h1>登录</h1>
-        <el-input class="login-input" placeholder="用户名"></el-input>
-        <el-input class="login-input" placeholder="密码"></el-input>
-        <el-button class="login-btn">登录</el-button>
+        <el-input class="login-input" :disabled="isLoading" placeholder="用户名" v-model='userName'></el-input>
+        <el-input class="login-input" :disabled="isLoading" placeholder="密码" v-model='passWord' type='password'></el-input>
+        <el-button class="login-btn" :loading="isLoading" @click='submit'>登录</el-button>
       </div>
     </div>
   </div>
@@ -14,43 +14,64 @@
 
 <script>
 export default {
-  name:'login',
-  data(){
+  name: 'login',
+  data() {
     return {
+      userName: '',
+      passWord: '',
+      isLoading:false
+    }
+  },
+  methods: {
+    submit() {
+      if(this.userName == '' || this.passWord == ''){
+        this.$message({
+          message:'登录信息不能为空',
+          type:'warning'
+        });
+      }else{
+        this.isLoading = true;
+      }
     }
   }
 }
 </script>
 
 <style lang="css">
-html{
+html {
   overflow: hidden;
 }
-.ui-login{
+
+.ui-login {
   height: 100%;
   display: flex;
   flex-direction: row;
 }
-.ui-left{
+
+.ui-left {
   flex: 1;
   background: url('../../assets/img/pic-1.jpg') no-repeat;
   background-size: 100% 100%;
 }
-.ui-right{
-  flex:1;
+
+.ui-right {
+  flex: 1;
   background: white;
   display: flex;
   justify-content: center;
 }
-.login-container{
+
+.login-container {
   flex: .6;
   align-self: center;
   height: 400px;
 }
-.login-input{
+
+.login-input {
   margin-bottom: 20px;
 }
-.login-btn{
+
+.login-btn {
   width: 100%;
 }
 </style>
