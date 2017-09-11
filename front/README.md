@@ -11,4 +11,4 @@
   .router
     - router.js //单页面路由
   App.vue
-  main.js
+  main.js//入口
