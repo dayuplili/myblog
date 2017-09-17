@@ -12,7 +12,7 @@ Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(resource);
 Vue.config.productionTip = false
-
+Vue.http.options.emulateJSON = true;
 
 const router = new VueRouter({
   mode: 'history',

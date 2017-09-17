@@ -3,35 +3,59 @@
     <div class='ui-left'></div>
     <div class='ui-right'>
       <div class='login-container'> 
-        <h1>登录</h1>
+        <h1>欢迎</h1> 
         <el-input class="login-input" :disabled="isLoading" placeholder="用户名" v-model='userName'></el-input>
         <el-input class="login-input" :disabled="isLoading" placeholder="密码" v-model='passWord' type='password'></el-input>
-        <el-button class="login-btn" :loading="isLoading" @click='submit'>登录</el-button>
+        <el-button class="login-btn signIn" :loading="isLoading" @click='submit(1)'>登录</el-button>
+        <el-button class="login-btn signUp" :loading="isLoading" @click='submit(2)'>注册</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import urlList from '../../config/url.js'
 export default {
   name: 'login',
   data() {
     return {
       userName: '',
       passWord: '',
-      isLoading:false
+      isLoading: false,
+      loginUrl: urlList.login
     }
   },
   methods: {
-    submit() {
-      if(this.userName == '' || this.passWord == ''){
+    submit(type) {
+      if (this.userName == '' || this.passWord == '') {
         this.$message({
-          message:'登录信息不能为空',
-          type:'warning'
+          message: '信息不能为空',
+          type: 'warning'
         });
-      }else{
+      } else {
+        this.bindAjax(type);
         this.isLoading = true;
       }
+    },
+    bindAjax(type) {
+      this.$http.get(this.loginUrl, { 'params': { 'userName': this.userName, 'passWord': this.passWord, 'type': type } })
+        .then((res) => {
+          if (res.status === 200) {
+            if (res.body.code === 201 && res.body.type === 2) {
+              this.$message({
+                message: '注册成功,即将自动跳转',
+                type: 'success',
+                onClose: () => {
+                  console.log(111111);
+                }
+              });
+            } else if (res.body.code === 200 && res.body.type === 1) {
+              console.log(22222);
+            }
+          }
+        }, (err) => {
+          console.log(err)
+        })
     }
   }
 }
@@ -72,6 +96,14 @@ html {
 }
 
 .login-btn {
-  width: 100%;
+  width: 40%;
+}
+
+.login-btn.signIn {
+  float: left;
+}
+
+.login-btn.signUp {
+  float: right;
 }
 </style>
