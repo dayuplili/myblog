@@ -1,106 +1,97 @@
 <template lang="html">
-  <div class="">
-    <tophead></tophead>
-    <div class="addblog clearfix">
-      <leftmenu :tab-status='activeIndex'></leftmenu>
-      <div class="addblog-main">
-        <el-row>
-            <el-col :span="16">
-                <el-form :label-position="labelPosition" label-width="80px" class="bloginfo-form">
-                    <el-form-item label="文章名称">
-                        <el-input v-model='formData.title'></el-input>
-                    </el-form-item>
-                    <el-form-item label="文章标签">
-                        <el-select v-model='formData.type'
-                                  filterable
-                                  multiple
-                                  :multiple-limit=1
-                                  allow-create
-                                  placeholder="请选择文章标签">
-                          <el-option
-                          v-for="item in types"
-                          :label="item"
-                          :value="item"
-                          key='$index'></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="文章内容">
-                        <el-input type='textarea' :autosize='{minRows: 10}' v-model='formData.content'></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click='submitForm'>保存</el-button>
-                    </el-form-item>
-                </el-form>
-            </el-col>
-        </el-row>
-      </div>
+  <div class="addBlog">
+    <topBar></topBar>
+    <slideMenu></slideMenu>
+    <div class="container">
+      <el-form label-width="80px" class="blog-form" ref="numberValidateForm">
+        <el-form-item label="文章标题">
+          <el-input placeholder="请输入文章标题" v-model='blogForm.mainTitle'></el-input>
+        </el-form-item>
+        <el-form-item label="文章标签">
+          <el-input placeholder="请输入文章标签" v-model='blogForm.tag'></el-input>
+        </el-form-item>
+        <el-form-item label="文章内容">
+          <quill-editor   
+          v-model="blogForm.editValue"
+          :options="editorOption"></quill-editor>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" size="large" @click='formSubmit(numberValidateForm)' :loading="isLoading">发布</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
 
 <script>
-import leftmenu from '../../components/leftMenu'
-import tophead from '../../components/header'
+import topBar from '../../components/header.vue'
+import slideMenu from '../../components/slideMenu.vue'
+import Quill from 'quill'
+import { ImageImport } from '../../assets/modules/ImageImport.js'
+import { ImageResize } from '../../assets/modules/ImageResize.js'
+Quill.register('modules/imageImport', ImageImport)
+Quill.register('modules/imageResize', ImageResize)
 export default {
-  name:'addblog',
-  components:{
-    tophead,
-    leftmenu
+  name: 'addBlog',
+  components: {
+    topBar,
+    slideMenu
   },
-  data(){
-      return{
-          labelPosition:'top',
-          formData:{
-              title:'',
-              content:'',
-              type:''
-          },
-          types:null,
-          activeIndex:'addblog'
-      }
+  data() {
+    return {
+      editorOption:{
+        modules: {
+            toolbar: [
+              ['bold', 'italic'],
+              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+              ['link', 'image']
+            ],
+            history: {
+              delay: 1000,
+              maxStack: 50,
+              userOnly: false
+            },
+            imageImport: true,
+            imageResize: {
+              displaySize: true
+            }
+          }
+      },
+      blogForm:{
+        editValue:'',
+        mainTitle:'',
+        tag:''
+      },
+      isLoading:false
+    }
   },
-  created(){
-      this.$http.get('http://127.0.0.1:3000/blog/getType').then(function(data){
-            this.types = data.body;
-      })
-  },
+
   http: {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
   },
-  methods:{
-    submitForm(){
-      var url = 'http://127.0.1:3000/blog/addBlog';
-      this.$http.post(url,this.formData,{emulateJSON:true}).then(function(data){
-      var tag = data.body.result;
-      if(tag){
-          this.$message('保存成功');
-        }
-      },function(res){
-          this.$message('保存失败');
-      })
+  methods: {
+    formSubmit(name){
+      this.isLoading = true;
+      this.$refs[name].validateField()
     }
   }
 }
 </script>
 
 <style lang="css">
-.addblog{
-  width: 1000px;
-  margin: 80px auto;
-  background-color: #fff;
-  z-index: 2;
+.addBlog {
+  height: 100%;
 }
-.clearfix{
-  clear: both;
-  overflow: hidden;
+.container {
+  background: #fff;
+  margin: 20px 20px;
+  float: left;
+  width: 1100px;
 }
-.addblog-main{
-  width: 800px;
-  float: right;
-  padding-top: 30px;
-  padding-bottom: 20px;
+.ql-container.ql-snow{
+  height: 250px;
 }
-.bloginfo-form{
-  padding-left: 20px;
+.blog-form{
+  padding: 30px 30px;
 }
 </style>

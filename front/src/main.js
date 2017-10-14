@@ -6,11 +6,13 @@ import 'element-ui/lib/theme-default/index.css'
 import VueRouter from 'vue-router'
 import routers from './router/router'
 import resource from 'vue-resource'
+import VueQuillEditor from 'vue-quill-editor'
 import App from './App'
 
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(resource);
+Vue.use(VueQuillEditor);
 Vue.config.productionTip = false
 Vue.http.options.emulateJSON = true;
 

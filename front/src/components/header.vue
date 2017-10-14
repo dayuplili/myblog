@@ -33,7 +33,7 @@ export default {
   width: 100%;
   height: 50px;
   background: #fff;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 10;

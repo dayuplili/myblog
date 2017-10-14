@@ -46,11 +46,11 @@ export default {
                 message: '注册成功,即将自动跳转',
                 type: 'success',
                 onClose: () => {
-                  console.log(111111);
+                  this.$router.push({path:'/usercenter'});
                 }
               });
             } else if (res.body.code === 200 && res.body.type === 1) {
-              console.log(22222);
+              this.$router.push({path:'/usercenter'});
             }
           }
         }, (err) => {
@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 html {
   overflow: hidden;
 }
