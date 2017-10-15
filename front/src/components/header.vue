@@ -15,10 +15,8 @@ export default {
     }
   },
   created(){
-    this.username = window.location.search.split('=')[1];
-    if(this.username !== ''){
-      this.isLogin = true;
-    }
+    this.username = this.$store.state.userName;
+    this.isLogin = true;
   },
   methods:{
     login(){

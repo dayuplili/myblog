@@ -8,11 +8,13 @@ import routers from './router/router'
 import resource from 'vue-resource'
 import VueQuillEditor from 'vue-quill-editor'
 import App from './App'
+import store from './store/index'
 
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(resource);
 Vue.use(VueQuillEditor);
+
 Vue.config.productionTip = false
 Vue.http.options.emulateJSON = true;
 
@@ -25,6 +27,7 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

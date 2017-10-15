@@ -16,7 +16,7 @@
           :options="editorOption"></quill-editor>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="large" @click='formSubmit(numberValidateForm)' :loading="isLoading">发布</el-button>
+          <el-button type="primary" size="large" @click='formSubmit' :loading="isLoading">发布</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -31,6 +31,7 @@ import { ImageImport } from '../../assets/modules/ImageImport.js'
 import { ImageResize } from '../../assets/modules/ImageResize.js'
 Quill.register('modules/imageImport', ImageImport)
 Quill.register('modules/imageResize', ImageResize)
+import urlList from '../../config/url.js'
 export default {
   name: 'addBlog',
   components: {
@@ -39,40 +40,51 @@ export default {
   },
   data() {
     return {
-      editorOption:{
+      editorOption: {
         modules: {
-            toolbar: [
-              ['bold', 'italic'],
-              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-              ['link', 'image']
-            ],
-            history: {
-              delay: 1000,
-              maxStack: 50,
-              userOnly: false
-            },
-            imageImport: true,
-            imageResize: {
-              displaySize: true
-            }
+          toolbar: [
+            ['bold', 'italic'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['link', 'image']
+          ],
+          history: {
+            delay: 1000,
+            maxStack: 50,
+            userOnly: false
+          },
+          imageImport: true,
+          imageResize: {
+            displaySize: true
           }
+        }
       },
-      blogForm:{
-        editValue:'',
-        mainTitle:'',
-        tag:''
+      blogForm: {
+        editValue: '',
+        mainTitle: '',
+        tag: ''
       },
-      isLoading:false
+      isLoading: false
     }
   },
-
-  http: {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-  },
   methods: {
-    formSubmit(name){
+    formSubmit(name) {
       this.isLoading = true;
-      this.$refs[name].validateField()
+      this.blogForm['userName'] = this.$store.state.userName;
+      this.$http.post(urlList.addPage, this.blogForm, { emulateJSON: true })
+        .then((res) => {
+          if (res.status === 200) {
+            this.$message({
+              message: '发布博客成功',
+              type: 'success',
+              onClose: () => {
+                this.isLoading = false;
+              }
+            });
+          }
+        },
+        (err) => {
+          console.log(err);
+        })
     }
   }
 }
@@ -82,16 +94,19 @@ export default {
 .addBlog {
   height: 100%;
 }
+
 .container {
   background: #fff;
   margin: 20px 20px;
   float: left;
   width: 1100px;
 }
-.ql-container.ql-snow{
+
+.ql-container.ql-snow {
   height: 250px;
 }
-.blog-form{
+
+.blog-form {
   padding: 30px 30px;
 }
 </style>
