@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .addBlog {
   height: 100%;
 }
