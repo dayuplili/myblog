@@ -1,7 +1,8 @@
 <template>
   <div class="slideMenu">
-    <el-menu theme="dark" default-active="1" class="slide-menu">
-      <el-menu-item index='1'>发布文章</el-menu-item>
+    <el-menu theme="dark" default-active="1" class="slide-menu" router>
+      <el-menu-item index="/usercenter">发布文章</el-menu-item>
+      <el-menu-item index="/usercenter/blogList">文章列表</el-menu-item>
     </el-menu>
   </div>
 </template>
