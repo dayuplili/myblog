@@ -11,6 +11,9 @@
           <el-table-column label="标签" prop='pageTag'>
           </el-table-column>
           <el-table-column label="操作">
+            <template scope="scope">
+               <el-button size="small" @click="handleDelete(scope)">删除</el-button>
+            </template>  
           </el-table-column>    
         </el-table>
       </div> 
@@ -19,29 +22,47 @@
 <script>
 import topBar from "../../components/header.vue";
 import slideMenu from "../../components/slideMenu.vue";
-import urlList from '../../config/url.js'
+import urlList from "../../config/url.js";
 export default {
-  created(){
-    this.$http.get(urlList.getBlogs,{'params':{'userName':this.$store.state.userName}}).then(res=>{
-      if(res.status === 200){
-        this.tableData = res.body.result;
-      }
-    })
+  created() {
+    this.$http
+      .get(urlList.getBlogs, {
+        params: { userName: this.$store.state.userName }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          this.tableData = res.body.result;
+        }
+      });
   },
   name: "blogList",
-  data(){
+  data() {
     return {
       tableData: []
-    }
+    };
   },
   components: {
     topBar,
     slideMenu
+  },
+  methods: {
+    handleDelete(item) {
+      var id = item.row._id;
+      this.$http
+        .get(urlList.deletePage, {
+          params: { pageId: id,userName: this.$store.state.userName }
+        })
+        .then(res => {
+          if (res.status === 200) {
+           this.tableData = res.body.result;
+          }
+        });
+    }
   }
 };
 </script>
 <style scoped>
-.blogList{
+.blogList {
   height: 100%;
 }
 .container {
