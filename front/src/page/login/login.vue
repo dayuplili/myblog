@@ -15,6 +15,7 @@
 
 <script>
 import urlList from '../../config/url.js'
+
 export default {
   name: 'login',
   data() {
@@ -52,7 +53,7 @@ export default {
             } else if (res.body.code === 200 && res.body.type === 1) {
               this.$router.push({path:'/usercenter'});
             }
-            this.$store.commit('bindUserName',{'userName':this.userName});
+            this.$store.commit('SETLOGIN',{'userName':this.userName});
           }
         }, (err) => {
           console.log(err)

@@ -20,14 +20,16 @@
     </div>
 </template>
 <script>
-import topBar from "../../components/header.vue";
+import topBar from "../../components/TopNav.vue";
 import slideMenu from "../../components/slideMenu.vue";
 import urlList from "../../config/url.js";
+import { mapState } from 'vuex'
+
 export default {
   created() {
     this.$http
       .get(urlList.getBlogs, {
-        params: { userName: this.$store.state.userName }
+        params: { userName: this.userName }
       })
       .then(res => {
         if (res.status === 200) {
@@ -40,6 +42,11 @@ export default {
     return {
       tableData: []
     };
+  },
+  computed:{
+    ...mapState([
+      'userName'
+    ])
   },
   components: {
     topBar,

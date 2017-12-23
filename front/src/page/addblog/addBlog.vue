@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import topBar from '../../components/header.vue'
+import topBar from '../../components/TopNav.vue'
 import slideMenu from '../../components/slideMenu.vue'
 import Quill from 'quill'
 import { ImageImport } from '../../assets/modules/ImageImport.js'

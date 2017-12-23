@@ -6,8 +6,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  name:'header',
+  name:'topNav',
   data(){
     return {
       username:'',
@@ -15,8 +17,13 @@ export default {
     }
   },
   created(){
-    this.username = this.$store.state.userName;
+    this.username = this.userName;
     this.isLogin = true;
+  },
+  computed:{
+    ...mapState([
+      'userName'
+    ])
   },
   methods:{
     login(){
